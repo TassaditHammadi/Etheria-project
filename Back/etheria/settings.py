@@ -29,7 +29,12 @@ SECRET_KEY = 'django-insecure-vbzb)9q_mn1-nj)g3e&vf1ei#!q(&w#wvrrx)5ux_u))9i8cou
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "etheria-project-uqf4.vercel.app",
+    "back-etheria.onrender.com",  
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition

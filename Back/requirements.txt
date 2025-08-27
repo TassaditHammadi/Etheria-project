@@ -1,0 +1,10 @@
+Django>=5.0,<6.0
+gunicorn
+psycopg2-binary
+python-dotenv
+django-cors-headers
+django-graphql-jwt
+graphene-file-upload
+requests
+stripe
+djangorestframework
