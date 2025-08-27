@@ -1,0 +1,23 @@
+<!-- reservations/templates/liste_factures.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Mes factures</title>
+</head>
+<body>
+    <h1>Mes factures</h1>
+    {% if factures %}
+        <ul>
+            {% for facture in factures %}
+                <li>
+                    Facture #{{ facture.id }} pour la réservation #{{ facture.reservation.id }} :
+                    <a href="{{ facture.fichier_pdf.url }}" target="_blank">Télécharger</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune facture trouvée.</p>
+    {% endif %}
+</body>
+</html>

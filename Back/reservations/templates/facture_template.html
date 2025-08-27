@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Facture – Réservation #{{ reservation.id }}</title>
+  <style>
+    body { font-family:"DejaVu Sans",sans-serif; background:#f9fbfd; margin:0; padding:0; font-size:14px; color:#333; }
+    .facture-container { max-width:750px; margin:30px auto; background:#fff; border-radius:12px; overflow:hidden;
+      box-shadow:0 4px 20px rgba(0,0,0,0.08); border:1px solid #e5eaf0; }
+    .header { background:#e3f2fd; color:#0d47a1; padding:20px; text-align:center; border-bottom:3px solid #2196f3; }
+    .header h1 { margin:0; font-size:20px; font-weight:bold; }
+    .section { padding:20px; border-bottom:1px solid #f0f0f0; }
+    .section-title { font-size:16px; font-weight:bold; color:#1565c0; margin-bottom:12px; padding-bottom:4px; border-bottom:1px solid #bbdefb; }
+    .details-table { width:100%; border-collapse:collapse; }
+    .details-table th { text-align:left; background:#f5f9ff; color:#1565c0; padding:8px; border-bottom:1px solid #d6e4f5; font-weight:600; width:38%; }
+    .details-table td { padding:8px; border-bottom:1px solid #f0f0f0; }
+    .summary { padding:16px 20px; background:#f5f9ff; display:flex; justify-content:space-between; font-weight:bold; color:#0d47a1; border-top:2px solid #bbdefb; }
+    .footer { text-align:center; padding:15px; font-size:12px; background:#fafafa; color:#777; }
+    /* petite puce bleue pour les titres inline */
+    .badge { display:inline-block; width:8px; height:8px; background:#1565c0; border-radius:999px; margin-right:6px; vertical-align:middle; }
+  </style>
+</head>
+<body>
+  <div class="facture-container">
+    <!-- Bandeau -->
+    <div class="header">
+      <h1>Facture – Réservation #{{ reservation.id }}</h1>
+    </div>
+
+    <!-- Détails client -->
+    <div class="section">
+      <div class="section-title"><span class="badge"></span>Détails du client</div>
+      <table class="details-table">
+        <tr>
+          <th>Nom complet</th>
+          <td>{{ reservation.nom }} {{ reservation.prenom }}</td>
+        </tr>
+        <tr>
+          <th>Adresse courriel</th>
+          <td>{{ reservation.email }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Détails réservation -->
+    <div class="section">
+      <div class="section-title"><span class="badge"></span>Détails de la réservation</div>
+      <table class="details-table">
+        <tr>
+          <th>Destination</th>
+          <td>{{ reservation.destination }}</td>
+        </tr>
+        <tr>
+          <th>Date du voyage</th>
+          <td>{{ reservation.date_voyage }}</td>
+        </tr>
+        <tr>
+          <th>Nombre de personnes</th>
+          <td>{{ reservation.nombre_personnes }}</td>
+        </tr>
+        <tr>
+          <th>Statut</th>
+          <td>{{ reservation.statut }}</td>
+        </tr>
+      </table>
+    </div>
+
+    {# --- Section Modifications (affichée seulement si "modification" est fourni) --- #}
+    {% if modification %}
+    <div class="section">
+      <div class="section-title"><span class="badge"></span>Modifications</div>
+      <table class="details-table">
+        <tr>
+          <th>Type</th>
+          <td>
+            {% if modification.type == 'supplement_personnes' %}
+              Supplément – Nombre de personnes
+            {% else %}
+              {{ modification.type }}
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th>Avant</th>
+          <td>{{ modification.old }}</td>
+        </tr>
+        <tr>
+          <th>Après</th>
+          <td>{{ modification.new }}</td>
+        </tr>
+        <tr>
+          <th>Delta</th>
+          <td>{% if modification.delta > 0 %}+{% endif %}{{ modification.delta }}</td>
+        </tr>
+        <tr>
+          <th>Montant</th>
+          <td>
+            {% if modification.montant is not none %}
+              {{ modification.montant }} {{ modification.currency|default:"CAD" }}
+            {% else %}
+              —
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <td>{{ modification.date }}</td>
+        </tr>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- Résumé montant -->
+    <div class="summary">
+      <span>Montant total :</span>
+      <span>200,00&nbsp;$ CAD</span>
+    </div>
+
+    <!-- Résumé date -->
+    <div class="summary">
+      <span>Date d’émission :</span>
+      <span>{{ date_aujourdhui }}</span>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="footer">
+      Merci d’avoir choisi notre agence. Bon voyage.
+    </div>
+  </div>
+</body>
+</html>
