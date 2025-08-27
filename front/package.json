@@ -1,4 +1,6 @@
 {
+  "engines": {
+    "node": "18.x"},
   "name": "front",
   "private": true,
   "version": "0.0.0",

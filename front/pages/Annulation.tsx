@@ -1,5 +1,5 @@
 // src/pages/Annulation.tsx
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 
